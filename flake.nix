@@ -152,21 +152,21 @@
                 # SSH Config - Manage your SSH keys and host settings
                 # This creates your ~/.ssh/config file
                 #--------------------------------------------------------------
-                # programs.ssh = {
-                #   enable = true;
-                #   enableDefaultConfig = false;
-                #   matchBlocks = {
-                #     # GitHub SSH configuration
-                #     "github.com" = {
-                #       identityFile = "~/.ssh/id_ed25519";
-                #       identitiesOnly = true;
-                #       extraOptions = {
-                #         AddKeysToAgent = "yes"; # Auto-load key into ssh-agent
-                #         UseKeychain = "yes"; # Store passphrase in macOS Keychain
-                #       };
-                #     };
-                #   };
-                # };
+                programs.ssh = {
+                  enable = true;
+                  enableDefaultConfig = false;
+                  matchBlocks = {
+                    # GitHub SSH configuration
+                    "github.com" = {
+                      identityFile = "~/.ssh/id_ed25519";
+                      identitiesOnly = true;
+                      extraOptions = {
+                        AddKeysToAgent = "yes"; # Auto-load key into ssh-agent
+                        UseKeychain = "yes"; # Store passphrase in macOS Keychain
+                      };
+                    };
+                  };
+                };
 
                 #--------------------------------------------------------------
                 # Git Config - Your version control settings
