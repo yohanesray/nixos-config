@@ -60,10 +60,23 @@
           homebrew = {
             enable = true;
 
+            # GUI
             casks = [
               "zed"
+              "rectangle"
+              "whatsapp"
+            ];
+
+            brews = [
 
             ];
+
+            # Homebrew package repositories
+            taps = [ "homebrew/cask" ];
+
+            onActivation = {
+              cleanup = "zap";
+            };
 
           };
 
