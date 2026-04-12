@@ -16,6 +16,9 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -26,6 +29,7 @@
       nix-homebrew,
       homebrew-core,
       homebrew-cask,
+      home-manager,
     }:
     let
       user = "yohanesray";
@@ -34,11 +38,12 @@
         {
 
           system.primaryUser = user;
+          users.users.${user}.home = "/Users/${user}";
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
           environment.systemPackages = [
             pkgs.vim
-            pkgs.nixfmt-rfc-style
+            pkgs.nixfmt
           ];
 
           # Necessary for using flakes on this system.
@@ -120,6 +125,79 @@
               homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
             }
           )
+
+          #--------------------------------------------------------------------
+          # Home Manager - Your Personal User Configuration
+          # This manages your dotfiles, shell, and user-level packages
+          #--------------------------------------------------------------------
+          home-manager.darwinModules.home-manager
+          {
+            # Use the same nixpkgs as your system config
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            # Your personal user settings
+            home-manager.users.${user} =
+              { pkgs, ... }:
+              {
+                #--------------------------------------------------------------
+                # Home Manager Metadata
+                #--------------------------------------------------------------
+                home = {
+                  enableNixpkgsReleaseCheck = false;
+                  stateVersion = "25.05";
+                };
+
+                #--------------------------------------------------------------
+                # SSH Config - Manage your SSH keys and host settings
+                # This creates your ~/.ssh/config file
+                #--------------------------------------------------------------
+                # programs.ssh = {
+                #   enable = true;
+                #   enableDefaultConfig = false;
+                #   matchBlocks = {
+                #     # GitHub SSH configuration
+                #     "github.com" = {
+                #       identityFile = "~/.ssh/id_ed25519";
+                #       identitiesOnly = true;
+                #       extraOptions = {
+                #         AddKeysToAgent = "yes"; # Auto-load key into ssh-agent
+                #         UseKeychain = "yes"; # Store passphrase in macOS Keychain
+                #       };
+                #     };
+                #   };
+                # };
+
+                #--------------------------------------------------------------
+                # Git Config - Your version control settings
+                # This creates your ~/.gitconfig file
+                #--------------------------------------------------------------
+                programs.git = {
+                  enable = true;
+                  settings = {
+                    user = {
+                      name = "yohanesray21";
+                      email = "yohanesrfsilitonga21@gmail.com";
+                    };
+                    # Use "main" instead of "master" for new repos
+                    init.defaultBranch = "main";
+                  };
+                };
+
+                #--------------------------------------------------------------
+                # Zsh Config - Your shell configuration
+                # This manages your ~/.zshrc
+                #--------------------------------------------------------------
+                programs.zsh = {
+                  enable = true;
+                  enableCompletion = true; # Press TAB to autocomplete
+                  autosuggestion.enable = true; # Fish-style suggestions
+                  syntaxHighlighting.enable = true; # Color your commands
+                };
+
+              };
+          }
+
         ];
       };
     };
