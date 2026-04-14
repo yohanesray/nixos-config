@@ -70,10 +70,13 @@
               "zed"
               "rectangle"
               "whatsapp"
+              "arc"
+
             ];
 
+            # CLI
             brews = [
-
+              "pnpm"
             ];
 
             # Homebrew package repositories
@@ -176,7 +179,7 @@
                   enable = true;
                   settings = {
                     user = {
-                      name = "yohanesray21";
+                      name = "yohanesray";
                       email = "yohanesrfsilitonga21@gmail.com";
                     };
                     # Use "main" instead of "master" for new repos
