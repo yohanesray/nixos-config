@@ -41,9 +41,10 @@
           users.users.${user}.home = "/Users/${user}";
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
-          environment.systemPackages = [
+          environment.systemPackages = with pkgs; [
             pkgs.vim
             pkgs.nixfmt
+            bun # Bun is a fast, modern JavaScript runtime
           ];
 
           # Necessary for using flakes on this system.
@@ -71,11 +72,13 @@
               "rectangle"
               "whatsapp"
               "arc"
-
+              "claude-code"
+              "antigravity"
             ];
 
             # CLI
             brews = [
+              "node"
               "pnpm"
             ];
 
