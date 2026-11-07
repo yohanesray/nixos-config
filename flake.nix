@@ -45,6 +45,8 @@
             pkgs.vim
             pkgs.nixfmt
             bun # Bun is a fast, modern JavaScript runtime
+            yt-dlp
+            ffmpeg
           ];
 
           # Necessary for using flakes on this system.
@@ -74,12 +76,35 @@
               "arc"
               "claude-code"
               "antigravity"
+              "google-chrome"
+              "pdf-expert"
+              "zoom"
+              "adobe-acrobat-reader"
+              "discord"
+              "codex"
+              "codex-app"
+              "t3-code"
+              "kiro"
+              "figma"
+              "docker-desktop"
+              "ngrok"
+              "notion"
+              "telegram"
+              "notion-calendar"
+              "codex"
+              "google-drive"
+              "grok-bot"
+              "thebrowsercompany-dia"
             ];
 
             # CLI
             brews = [
-              "node"
               "pnpm"
+              "node"
+              "python"
+              "opencode"
+              "docker"
+              "docker-compose"
             ];
 
             # Homebrew package repositories
@@ -161,15 +186,13 @@
                 programs.ssh = {
                   enable = true;
                   enableDefaultConfig = false;
-                  matchBlocks = {
+                  settings = {
                     # GitHub SSH configuration
                     "github.com" = {
-                      identityFile = "~/.ssh/id_ed25519";
-                      identitiesOnly = true;
-                      extraOptions = {
-                        AddKeysToAgent = "yes"; # Auto-load key into ssh-agent
-                        UseKeychain = "yes"; # Store passphrase in macOS Keychain
-                      };
+                      IdentityFile = "~/.ssh/id_ed25519";
+                      IdentitiesOnly = true;
+                      AddKeysToAgent = "yes"; # Auto-load key into ssh-agent
+                      UseKeychain = "yes"; # Store passphrase in macOS Keychain
                     };
                   };
                 };
@@ -199,6 +222,11 @@
                   enableCompletion = true; # Press TAB to autocomplete
                   autosuggestion.enable = true; # Fish-style suggestions
                   syntaxHighlighting.enable = true; # Color your commands
+                };
+
+                programs.oh-my-posh = {
+                  enable = true;
+                  useTheme = "spaceship";
                 };
 
               };
